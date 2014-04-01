@@ -1,0 +1,7 @@
+dependencies {
+    compile 'com.typesafe:config:1.2.0'
+    compile 'joda-time:joda-time:2.3'
+    compile 'org.antlr:stringtemplate:4.0.2'
+    compile 'com.google.apis:google-api-services-bigquery:v2-rev132-1.17.0-rc'
+    compile 'com.google.http-client:google-http-client-jackson2:1.17.0-rc'
+}
