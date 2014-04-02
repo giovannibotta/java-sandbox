@@ -7,6 +7,7 @@ package net.giovannibotta.trees;
 public class SimpleBinaryTreeNode<T> implements BinaryTreeNode<T> {
     private BinaryTreeNode<T> left, right;
     private final T elem;
+    private int height;
 
     public SimpleBinaryTreeNode(T elem) {
         this.elem = elem;
@@ -45,5 +46,15 @@ public class SimpleBinaryTreeNode<T> implements BinaryTreeNode<T> {
     @Override
     public void parent(BinaryTreeNode<T> parent) {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public int height() {
+        return height;
+    }
+
+    @Override
+    public void height(int h) {
+        this.height = h;
     }
 }

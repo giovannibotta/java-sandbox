@@ -13,9 +13,13 @@ public interface BinaryTreeNode<T> {
 
     BinaryTreeNode<T> parent();
 
-    void left( BinaryTreeNode<T> left);
+    void left(BinaryTreeNode<T> left);
 
     void right(BinaryTreeNode<T> right);
 
     void parent(BinaryTreeNode<T> parent);
+
+    int height();
+
+    void height(int h);
 }

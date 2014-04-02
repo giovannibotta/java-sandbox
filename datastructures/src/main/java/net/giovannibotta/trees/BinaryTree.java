@@ -11,30 +11,59 @@ import java.util.Map;
  * @since 3/31/14
  */
 public class BinaryTree<T> implements BinaryTreeInterface<T> {
-    BinaryTree(List<T> inOrder, List<T> preOrder) {
-        if (inOrder.size() != preOrder.size())
-            throw new IllegalArgumentException("inorder and preorder traversal lists have different sizes");
-        Map<T, Integer> inOrderPos = inOrderPositions(inOrder);
-        root = create(preOrder.get(0));
-        fromInOrderAndPreOrder(root, inOrderPos, 0, inOrder.size() - 1, preOrder, 0);
-    }
-
+    @Override
     public List<T> preOrder() {
         ImmutableList.Builder<T> b = ImmutableList.builder();
         preOrder(root, b);
         return b.build();
     }
 
+    @Override
     public List<T> postOrder() {
         ImmutableList.Builder<T> b = ImmutableList.builder();
         postOrder(root, b);
         return b.build();
     }
 
+    @Override
     public List<T> inOrder() {
         ImmutableList.Builder<T> b = ImmutableList.builder();
         inOrder(root, b);
         return b.build();
+    }
+
+    @Override
+    public int radius() {
+        // populate all the tree heights
+        computeHeights(root);
+        return radius(root);
+    }
+
+    private int radius(BinaryTreeNode<T> root) {
+        if (root == null) return 0;
+        int lh = 0, rh = 0;
+        if (root.left() != null) lh = root.left().height();
+        if (root.right() != null) rh = root.right().height();
+        int hsum = lh + rh;
+        int lr = radius(root.left()), rr = radius(root.right());
+        return Math.max(lr, Math.max(rr, hsum));
+    }
+
+    private int computeHeights(BinaryTreeNode<T> node) {
+        if (node == null) return 0;
+        int l = 0, r = 0;
+        if (node.left() != null) l = computeHeights(node.left());
+        if (node.right() != null) r = computeHeights(node.right());
+        node.height(Math.max(l, r) + 1);
+        return node.height();
+    }
+
+    BinaryTree(List<T> inOrder, List<T> preOrder) {
+        if (inOrder.size() != preOrder.size())
+            throw new IllegalArgumentException("inorder and preorder traversal lists have different sizes");
+        Map<T, Integer> inOrderPos = inOrderPositions(inOrder);
+        root = create(preOrder.get(0));
+        fromInOrderAndPreOrder(root, inOrderPos, 0, inOrder.size() - 1, preOrder, 0);
     }
 
     BinaryTreeNode<T> root;
@@ -95,8 +124,7 @@ public class BinaryTree<T> implements BinaryTreeInterface<T> {
         return inOrderPositions;
     }
 
-    @Override
-    public BinaryTreeNode<T> create(T elem) {
+    BinaryTreeNode<T> create(T elem) {
         return new SimpleBinaryTreeNode<>(elem);
     }
 }
