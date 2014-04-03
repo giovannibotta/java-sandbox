@@ -2,9 +2,11 @@ package net.giovannibotta.trees;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
+import net.giovannibotta.tuple.Couple;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author giovanni
@@ -69,6 +71,50 @@ public class BinaryTree<T> implements BinaryTreeInterface<T> {
     BinaryTreeNode<T> root;
 
     BinaryTree() {
+    }
+
+    public Collection<T> minimumVertexCover() {
+        return minimumVertexCover(null);
+    }
+
+    Collection<T> minimumVertexCover(Set<BinaryTreeNode<T>> cover) {
+        if (cover == null) cover = new HashSet<>();
+        if (!cover.isEmpty()) throw new IllegalArgumentException("The given set should be empty!");
+        minimumVertexCover(root, cover);
+        return ImmutableSet.copyOf(Lists.transform(ImmutableList.copyOf(cover), input -> input.value()));
+    }
+
+    private void minimumVertexCover(BinaryTreeNode<T> node, Set<BinaryTreeNode<T>> coverSoFar) {
+        // no node or no children, so it's a leaf, I don't need to add it
+        if (node == null || (node.left() == null && node.right() == null)) return;
+        minimumVertexCover(node.left(), coverSoFar);
+        minimumVertexCover(node.right(), coverSoFar);
+        // if either child is not in the cover, I have to add this to make sure the edge is covered by this node
+        if (node.left() != null && !coverSoFar.contains(node.left())) coverSoFar.add(node);
+        if (node.right() != null && !coverSoFar.contains(node.right())) coverSoFar.add(node);
+    }
+
+    public Couple<Collection<T>, Collection<T>> biColoring() {
+        ImmutableList.Builder<T> black = ImmutableList.builder();
+        ImmutableList.Builder<T> red = ImmutableList.builder();
+        black(root, black, red);
+        return Couple.<Collection<T>, Collection<T>>create(black.build(), red.build());
+    }
+
+    private void black(BinaryTreeNode<T> node, ImmutableList.Builder<T> black, ImmutableList.Builder<T> red) {
+        if (node != null) {
+            black.add(node.value());
+            red(node.left(), black, red);
+            red(node.right(), black, red);
+        }
+    }
+
+    private void red(BinaryTreeNode<T> node, ImmutableList.Builder<T> black, ImmutableList.Builder<T> red) {
+        if (node != null) {
+            red.add(node.value());
+            black(node.left(), black, red);
+            black(node.right(), black, red);
+        }
     }
 
     private void preOrder(BinaryTreeNode<T> root, ImmutableList.Builder<T> b) {
