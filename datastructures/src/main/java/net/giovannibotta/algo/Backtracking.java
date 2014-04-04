@@ -1,5 +1,7 @@
 package net.giovannibotta.algo;
 
+import com.google.common.collect.ImmutableList;
+
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
@@ -22,12 +24,6 @@ public class Backtracking<T> {
         this.start = start;
     }
 
-    public static interface PartialSolution<T> {
-        public PartialSolution<T> addAndCreateNew(T t);
-
-        public List<T> elements();
-    }
-
     public void backTrack() {
         backTrack(start, 0);
     }
@@ -37,8 +33,40 @@ public class Backtracking<T> {
         else {
             k++;
             List<T> s = computeSet.apply(a, k);
-            while (!s.isEmpty())
-                backTrack(a.addAndCreateNew(s.remove(0)), k);
+            while (!s.isEmpty()) backTrack(a.addAndCreateNew(s.remove(0)), k);
+        }
+    }
+
+    static interface PartialSolution<T> {
+        PartialSolution<T> addAndCreateNew(T t);
+
+        List<T> list();
+    }
+
+    static class GenericPartialSolution<T> implements PartialSolution<T> {
+        private final List<T> list;
+
+        GenericPartialSolution() {
+            this(ImmutableList.of());
+        }
+
+        GenericPartialSolution(List<T> l) {
+            this.list = l;
+        }
+
+        @Override
+        public GenericPartialSolution<T> addAndCreateNew(T t) {
+            return new GenericPartialSolution<>(
+                    ImmutableList.<T>builder()
+                            .addAll(list)
+                            .add(t)
+                            .build()
+            );
+        }
+
+        @Override
+        public List<T> list() {
+            return list;
         }
     }
 }
