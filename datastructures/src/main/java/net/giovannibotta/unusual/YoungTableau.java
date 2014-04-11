@@ -146,6 +146,7 @@ public class YoungTableau {
             for (int e : r) b.append(e < INFINITY ? String.format(fmt, e) : inf);
             b.append("]").append(System.lineSeparator());
         }
+        b.delete(b.length() - 1, b.length());
         return b.toString();
     }
 
