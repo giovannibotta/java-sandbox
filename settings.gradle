@@ -1,1 +1,1 @@
-include 'datastructures', 'benchmarks', 'jdk8', 'spoj'
+include 'datastructures', 'benchmarks', 'jdk8', 'spoj', 'antlr-examples'

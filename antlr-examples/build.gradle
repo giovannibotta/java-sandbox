@@ -1,0 +1,13 @@
+dependencies{
+    compile 'org.antlr:antlr4-runtime:4.2.1'
+}
+
+/*
+  Generate parser/lexer with:
+
+  antlr4 -package net.giovannibotta.antlr.example.arith1 -visitor -no-listener antlr-examples/src/main/java/net/giovannibotta/antlr/example/arith1/Expressions1.g4
+  antlr4 -package net.giovannibotta.antlr.example.arith2 -visitor -no-listener antlr-examples/src/main/java/net/giovannibotta/antlr/example/arith2/Expressions2.g4
+  antlr4 -package net.giovannibotta.antlr.example.bool1 -visitor -no-listener antlr-examples/src/main/java/net/giovannibotta/antlr/example/bool1/BooleanExpressions1.g4
+  antlr4 -package net.giovannibotta.antlr.example.bool2 -visitor -no-listener antlr-examples/src/main/java/net/giovannibotta/antlr/example/bool2/BooleanExpressions2.g4
+
+ */
