@@ -1,5 +1,11 @@
 // Generated from antlr-examples/src/main/java/net/giovannibotta/antlr/example/bool2/BooleanExpressions2.g4 by ANTLR 4.2
 package net.giovannibotta.antlr.example.bool2;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import com.google.common.collect.ImmutableSet;
+
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 

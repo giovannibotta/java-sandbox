@@ -1,5 +1,11 @@
 // Generated from antlr-examples/src/main/java/net/giovannibotta/antlr/example/bool2/BooleanExpressions2.g4 by ANTLR 4.2
 package net.giovannibotta.antlr.example.bool2;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import com.google.common.collect.ImmutableSet;
+
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -16,12 +22,12 @@ public class BooleanExpressions2Parser extends Parser {
 		new PredictionContextCache();
 	public static final int
 		T__14=1, T__13=2, T__12=3, T__11=4, T__10=5, T__9=6, T__8=7, T__7=8, T__6=9, 
-		T__5=10, T__4=11, T__3=12, T__2=13, T__1=14, T__0=15, Integer=16, Variable=17, 
-		BooleanConstant=18, WS=19;
+		T__5=10, T__4=11, T__3=12, T__2=13, T__1=14, T__0=15, IntegerConstant=16, 
+		BooleanConstant=17, Variable=18, WS=19;
 	public static final String[] tokenNames = {
 		"<INVALID>", "'&'", "')'", "'+'", "'-'", "'*'", "'('", "'<'", "'!='", 
-		"'<='", "'>'", "'=='", "'/'", "'~'", "'>='", "'|'", "Integer", "Variable", 
-		"BooleanConstant", "WS"
+		"'<='", "'>'", "'=='", "'/'", "'~'", "'>='", "'|'", "IntegerConstant", 
+		"BooleanConstant", "Variable", "WS"
 	};
 	public static final int
 		RULE_start = 0, RULE_arithmeticExpression = 1, RULE_arithmeticRelation = 2, 
@@ -44,6 +50,28 @@ public class BooleanExpressions2Parser extends Parser {
 
 	@Override
 	public ATN getATN() { return _ATN; }
+
+
+	private final HashSet<String> integerVariables = new HashSet<String>();
+	private final HashSet<String> booleanVariables = new HashSet<String>();
+
+	private void defineBooleanVariable(String var){
+	    if(integerVariables.contains(var)) throw new IllegalArgumentException("Variable " + var + " already declared as an integer variable");
+	    booleanVariables.add(var);
+	}
+
+	private void defineIntegerVariable(String var){
+	    if(booleanVariables.contains(var)) throw new IllegalArgumentException("Variable " + var + " already declared as a boolean variable");
+	    integerVariables.add(var);
+	}
+
+	public Set<String> getIntegerVariables(){
+	    return ImmutableSet.copyOf(integerVariables);
+	}
+
+	public Set<String> getBooleanVariables(){
+	    return ImmutableSet.copyOf(booleanVariables);
+	}
 
 	public BooleanExpressions2Parser(TokenStream input) {
 		super(input);
@@ -152,7 +180,7 @@ public class BooleanExpressions2Parser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(17);
+			setState(18);
 			switch (_input.LA(1)) {
 			case 6:
 				{
@@ -165,12 +193,12 @@ public class BooleanExpressions2Parser extends Parser {
 				setState(13); match(2);
 				}
 				break;
-			case Integer:
+			case IntegerConstant:
 				{
 				_localctx = new ArithAtomExprContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(15); ((ArithAtomExprContext)_localctx).constant = match(Integer);
+				setState(15); ((ArithAtomExprContext)_localctx).constant = match(IntegerConstant);
 				}
 				break;
 			case Variable:
@@ -179,13 +207,14 @@ public class BooleanExpressions2Parser extends Parser {
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(16); ((ArithAtomExprContext)_localctx).variable = match(Variable);
+				defineIntegerVariable((((ArithAtomExprContext)_localctx).variable!=null?((ArithAtomExprContext)_localctx).variable.getText():null));
 				}
 				break;
 			default:
 				throw new NoViableAltException(this);
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(27);
+			setState(28);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
 			while ( _alt!=2 && _alt!=-1 ) {
@@ -193,23 +222,23 @@ public class BooleanExpressions2Parser extends Parser {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(25);
+					setState(26);
 					switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
 					case 1:
 						{
 						_localctx = new ArithOpExprContext(new ArithmeticExpressionContext(_parentctx, _parentState));
 						((ArithOpExprContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_arithmeticExpression);
-						setState(19);
-						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
 						setState(20);
+						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
+						setState(21);
 						((ArithOpExprContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==5 || _la==12) ) {
 							((ArithOpExprContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						consume();
-						setState(21); ((ArithOpExprContext)_localctx).right = arithmeticExpression(6);
+						setState(22); ((ArithOpExprContext)_localctx).right = arithmeticExpression(5);
 						}
 						break;
 
@@ -218,22 +247,22 @@ public class BooleanExpressions2Parser extends Parser {
 						_localctx = new ArithOpExprContext(new ArithmeticExpressionContext(_parentctx, _parentState));
 						((ArithOpExprContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_arithmeticExpression);
-						setState(22);
-						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
 						setState(23);
+						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
+						setState(24);
 						((ArithOpExprContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==3 || _la==4) ) {
 							((ArithOpExprContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						consume();
-						setState(24); ((ArithOpExprContext)_localctx).right = arithmeticExpression(5);
+						setState(25); ((ArithOpExprContext)_localctx).right = arithmeticExpression(4);
 						}
 						break;
 					}
 					} 
 				}
-				setState(29);
+				setState(30);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
 			}
@@ -278,15 +307,15 @@ public class BooleanExpressions2Parser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(30); ((ArithmeticRelationContext)_localctx).left = arithmeticExpression(0);
-			setState(31);
+			setState(31); ((ArithmeticRelationContext)_localctx).left = arithmeticExpression(0);
+			setState(32);
 			((ArithmeticRelationContext)_localctx).op = _input.LT(1);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << 7) | (1L << 8) | (1L << 9) | (1L << 10) | (1L << 11) | (1L << 14))) != 0)) ) {
 				((ArithmeticRelationContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 			}
 			consume();
-			setState(32); ((ArithmeticRelationContext)_localctx).right = arithmeticExpression(0);
+			setState(33); ((ArithmeticRelationContext)_localctx).right = arithmeticExpression(0);
 			}
 		}
 		catch (RecognitionException re) {
@@ -390,7 +419,7 @@ public class BooleanExpressions2Parser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(44);
+			setState(46);
 			switch ( getInterpreter().adaptivePredict(_input,3,_ctx) ) {
 			case 1:
 				{
@@ -398,21 +427,12 @@ public class BooleanExpressions2Parser extends Parser {
 				_ctx = _localctx;
 				_prevctx = _localctx;
 
-				setState(35); match(13);
-				setState(36); ((BoolNotExpContext)_localctx).child = booleanExpression(3);
+				setState(36); match(13);
+				setState(37); ((BoolNotExpContext)_localctx).child = booleanExpression(6);
 				}
 				break;
 
 			case 2:
-				{
-				_localctx = new ArithRelContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
-				setState(37); arithmeticRelation();
-				}
-				break;
-
-			case 3:
 				{
 				_localctx = new BoolParenExpContext(_localctx);
 				_ctx = _localctx;
@@ -423,7 +443,7 @@ public class BooleanExpressions2Parser extends Parser {
 				}
 				break;
 
-			case 4:
+			case 3:
 				{
 				_localctx = new BoolAtomExprContext(_localctx);
 				_ctx = _localctx;
@@ -432,17 +452,27 @@ public class BooleanExpressions2Parser extends Parser {
 				}
 				break;
 
-			case 5:
+			case 4:
 				{
 				_localctx = new BoolAtomExprContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(43); ((BoolAtomExprContext)_localctx).variable = match(Variable);
+				defineBooleanVariable((((BoolAtomExprContext)_localctx).variable!=null?((BoolAtomExprContext)_localctx).variable.getText():null));
+				}
+				break;
+
+			case 5:
+				{
+				_localctx = new ArithRelContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(45); arithmeticRelation();
 				}
 				break;
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(54);
+			setState(56);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,5,_ctx);
 			while ( _alt!=2 && _alt!=-1 ) {
@@ -450,17 +480,17 @@ public class BooleanExpressions2Parser extends Parser {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(52);
+					setState(54);
 					switch ( getInterpreter().adaptivePredict(_input,4,_ctx) ) {
 					case 1:
 						{
 						_localctx = new BoolOpExprContext(new BooleanExpressionContext(_parentctx, _parentState));
 						((BoolOpExprContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_booleanExpression);
-						setState(46);
-						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
-						setState(47); ((BoolOpExprContext)_localctx).op = match(1);
-						setState(48); ((BoolOpExprContext)_localctx).right = booleanExpression(8);
+						setState(48);
+						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
+						setState(49); ((BoolOpExprContext)_localctx).op = match(1);
+						setState(50); ((BoolOpExprContext)_localctx).right = booleanExpression(6);
 						}
 						break;
 
@@ -469,16 +499,16 @@ public class BooleanExpressions2Parser extends Parser {
 						_localctx = new BoolOpExprContext(new BooleanExpressionContext(_parentctx, _parentState));
 						((BoolOpExprContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_booleanExpression);
-						setState(49);
-						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
-						setState(50); ((BoolOpExprContext)_localctx).op = match(15);
-						setState(51); ((BoolOpExprContext)_localctx).right = booleanExpression(7);
+						setState(51);
+						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
+						setState(52); ((BoolOpExprContext)_localctx).op = match(15);
+						setState(53); ((BoolOpExprContext)_localctx).right = booleanExpression(5);
 						}
 						break;
 					}
 					} 
 				}
-				setState(56);
+				setState(58);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,5,_ctx);
 			}
@@ -505,39 +535,40 @@ public class BooleanExpressions2Parser extends Parser {
 	}
 	private boolean arithmeticExpression_sempred(ArithmeticExpressionContext _localctx, int predIndex) {
 		switch (predIndex) {
-		case 0: return precpred(_ctx, 5);
+		case 0: return precpred(_ctx, 4);
 
-		case 1: return precpred(_ctx, 4);
+		case 1: return precpred(_ctx, 3);
 		}
 		return true;
 	}
 	private boolean booleanExpression_sempred(BooleanExpressionContext _localctx, int predIndex) {
 		switch (predIndex) {
-		case 2: return precpred(_ctx, 7);
+		case 2: return precpred(_ctx, 5);
 
-		case 3: return precpred(_ctx, 6);
+		case 3: return precpred(_ctx, 4);
 		}
 		return true;
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\25<\4\2\t\2\4\3\t"+
-		"\3\4\4\t\4\4\5\t\5\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3\24\n\3\3\3"+
-		"\3\3\3\3\3\3\3\3\3\3\7\3\34\n\3\f\3\16\3\37\13\3\3\4\3\4\3\4\3\4\3\5\3"+
-		"\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\5\5/\n\5\3\5\3\5\3\5\3\5\3\5\3\5\7"+
-		"\5\67\n\5\f\5\16\5:\13\5\3\5\2\4\4\b\6\2\4\6\b\2\5\4\2\7\7\16\16\3\2\5"+
-		"\6\4\2\t\r\20\20A\2\n\3\2\2\2\4\23\3\2\2\2\6 \3\2\2\2\b.\3\2\2\2\n\13"+
-		"\5\b\5\2\13\3\3\2\2\2\f\r\b\3\1\2\r\16\7\b\2\2\16\17\5\4\3\2\17\20\7\4"+
-		"\2\2\20\24\3\2\2\2\21\24\7\22\2\2\22\24\7\23\2\2\23\f\3\2\2\2\23\21\3"+
-		"\2\2\2\23\22\3\2\2\2\24\35\3\2\2\2\25\26\f\7\2\2\26\27\t\2\2\2\27\34\5"+
-		"\4\3\b\30\31\f\6\2\2\31\32\t\3\2\2\32\34\5\4\3\7\33\25\3\2\2\2\33\30\3"+
-		"\2\2\2\34\37\3\2\2\2\35\33\3\2\2\2\35\36\3\2\2\2\36\5\3\2\2\2\37\35\3"+
-		"\2\2\2 !\5\4\3\2!\"\t\4\2\2\"#\5\4\3\2#\7\3\2\2\2$%\b\5\1\2%&\7\17\2\2"+
-		"&/\5\b\5\5\'/\5\6\4\2()\7\b\2\2)*\5\b\5\2*+\7\4\2\2+/\3\2\2\2,/\7\24\2"+
-		"\2-/\7\23\2\2.$\3\2\2\2.\'\3\2\2\2.(\3\2\2\2.,\3\2\2\2.-\3\2\2\2/8\3\2"+
-		"\2\2\60\61\f\t\2\2\61\62\7\3\2\2\62\67\5\b\5\n\63\64\f\b\2\2\64\65\7\21"+
-		"\2\2\65\67\5\b\5\t\66\60\3\2\2\2\66\63\3\2\2\2\67:\3\2\2\28\66\3\2\2\2"+
-		"89\3\2\2\29\t\3\2\2\2:8\3\2\2\2\b\23\33\35.\668";
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\25>\4\2\t\2\4\3\t"+
+		"\3\4\4\t\4\4\5\t\5\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3\25\n\3"+
+		"\3\3\3\3\3\3\3\3\3\3\3\3\7\3\35\n\3\f\3\16\3 \13\3\3\4\3\4\3\4\3\4\3\5"+
+		"\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\5\5\61\n\5\3\5\3\5\3\5\3\5\3"+
+		"\5\3\5\7\59\n\5\f\5\16\5<\13\5\3\5\2\4\4\b\6\2\4\6\b\2\5\4\2\7\7\16\16"+
+		"\3\2\5\6\4\2\t\r\20\20C\2\n\3\2\2\2\4\24\3\2\2\2\6!\3\2\2\2\b\60\3\2\2"+
+		"\2\n\13\5\b\5\2\13\3\3\2\2\2\f\r\b\3\1\2\r\16\7\b\2\2\16\17\5\4\3\2\17"+
+		"\20\7\4\2\2\20\25\3\2\2\2\21\25\7\22\2\2\22\23\7\24\2\2\23\25\b\3\1\2"+
+		"\24\f\3\2\2\2\24\21\3\2\2\2\24\22\3\2\2\2\25\36\3\2\2\2\26\27\f\6\2\2"+
+		"\27\30\t\2\2\2\30\35\5\4\3\7\31\32\f\5\2\2\32\33\t\3\2\2\33\35\5\4\3\6"+
+		"\34\26\3\2\2\2\34\31\3\2\2\2\35 \3\2\2\2\36\34\3\2\2\2\36\37\3\2\2\2\37"+
+		"\5\3\2\2\2 \36\3\2\2\2!\"\5\4\3\2\"#\t\4\2\2#$\5\4\3\2$\7\3\2\2\2%&\b"+
+		"\5\1\2&\'\7\17\2\2\'\61\5\b\5\b()\7\b\2\2)*\5\b\5\2*+\7\4\2\2+\61\3\2"+
+		"\2\2,\61\7\23\2\2-.\7\24\2\2.\61\b\5\1\2/\61\5\6\4\2\60%\3\2\2\2\60(\3"+
+		"\2\2\2\60,\3\2\2\2\60-\3\2\2\2\60/\3\2\2\2\61:\3\2\2\2\62\63\f\7\2\2\63"+
+		"\64\7\3\2\2\649\5\b\5\b\65\66\f\6\2\2\66\67\7\21\2\2\679\5\b\5\78\62\3"+
+		"\2\2\28\65\3\2\2\29<\3\2\2\2:8\3\2\2\2:;\3\2\2\2;\t\3\2\2\2<:\3\2\2\2"+
+		"\b\24\34\36\608:";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

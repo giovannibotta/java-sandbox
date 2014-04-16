@@ -192,7 +192,7 @@ public class BooleanExpressions1Parser extends Parser {
 						((ArithOpExprContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_arithmeticExpression);
 						setState(18);
-						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
+						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
 						setState(19);
 						((ArithOpExprContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
@@ -200,7 +200,7 @@ public class BooleanExpressions1Parser extends Parser {
 							((ArithOpExprContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						consume();
-						setState(20); ((ArithOpExprContext)_localctx).right = arithmeticExpression(5);
+						setState(20); ((ArithOpExprContext)_localctx).right = arithmeticExpression(4);
 						}
 						break;
 
@@ -210,7 +210,7 @@ public class BooleanExpressions1Parser extends Parser {
 						((ArithOpExprContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_arithmeticExpression);
 						setState(21);
-						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
+						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
 						setState(22);
 						((ArithOpExprContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
@@ -218,7 +218,7 @@ public class BooleanExpressions1Parser extends Parser {
 							((ArithOpExprContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						consume();
-						setState(23); ((ArithOpExprContext)_localctx).right = arithmeticExpression(4);
+						setState(23); ((ArithOpExprContext)_localctx).right = arithmeticExpression(3);
 						}
 						break;
 					}
@@ -389,27 +389,27 @@ public class BooleanExpressions1Parser extends Parser {
 				_prevctx = _localctx;
 
 				setState(34); match(13);
-				setState(35); ((BoolNotExpContext)_localctx).child = booleanExpression(2);
+				setState(35); ((BoolNotExpContext)_localctx).child = booleanExpression(5);
 				}
 				break;
 
 			case 2:
 				{
-				_localctx = new ArithRelContext(_localctx);
+				_localctx = new BoolParenExpContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(36); arithmeticRelation();
+				setState(36); match(6);
+				setState(37); ((BoolParenExpContext)_localctx).child = booleanExpression(0);
+				setState(38); match(2);
 				}
 				break;
 
 			case 3:
 				{
-				_localctx = new BoolParenExpContext(_localctx);
+				_localctx = new ArithRelContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(37); match(6);
-				setState(38); ((BoolParenExpContext)_localctx).child = booleanExpression(0);
-				setState(39); match(2);
+				setState(40); arithmeticRelation();
 				}
 				break;
 
@@ -439,9 +439,9 @@ public class BooleanExpressions1Parser extends Parser {
 						((BoolOpExprContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_booleanExpression);
 						setState(44);
-						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
+						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
 						setState(45); ((BoolOpExprContext)_localctx).op = match(1);
-						setState(46); ((BoolOpExprContext)_localctx).right = booleanExpression(7);
+						setState(46); ((BoolOpExprContext)_localctx).right = booleanExpression(5);
 						}
 						break;
 
@@ -451,9 +451,9 @@ public class BooleanExpressions1Parser extends Parser {
 						((BoolOpExprContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_booleanExpression);
 						setState(47);
-						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
+						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
 						setState(48); ((BoolOpExprContext)_localctx).op = match(15);
-						setState(49); ((BoolOpExprContext)_localctx).right = booleanExpression(6);
+						setState(49); ((BoolOpExprContext)_localctx).right = booleanExpression(4);
 						}
 						break;
 					}
@@ -486,17 +486,17 @@ public class BooleanExpressions1Parser extends Parser {
 	}
 	private boolean arithmeticExpression_sempred(ArithmeticExpressionContext _localctx, int predIndex) {
 		switch (predIndex) {
-		case 0: return precpred(_ctx, 4);
+		case 0: return precpred(_ctx, 3);
 
-		case 1: return precpred(_ctx, 3);
+		case 1: return precpred(_ctx, 2);
 		}
 		return true;
 	}
 	private boolean booleanExpression_sempred(BooleanExpressionContext _localctx, int predIndex) {
 		switch (predIndex) {
-		case 2: return precpred(_ctx, 6);
+		case 2: return precpred(_ctx, 4);
 
-		case 3: return precpred(_ctx, 5);
+		case 3: return precpred(_ctx, 3);
 		}
 		return true;
 	}
@@ -510,13 +510,13 @@ public class BooleanExpressions1Parser extends Parser {
 		"\r\20\20=\2\n\3\2\2\2\4\22\3\2\2\2\6\37\3\2\2\2\b,\3\2\2\2\n\13\5\b\5"+
 		"\2\13\3\3\2\2\2\f\r\b\3\1\2\r\16\7\b\2\2\16\17\5\4\3\2\17\20\7\4\2\2\20"+
 		"\23\3\2\2\2\21\23\7\22\2\2\22\f\3\2\2\2\22\21\3\2\2\2\23\34\3\2\2\2\24"+
-		"\25\f\6\2\2\25\26\t\2\2\2\26\33\5\4\3\7\27\30\f\5\2\2\30\31\t\3\2\2\31"+
-		"\33\5\4\3\6\32\24\3\2\2\2\32\27\3\2\2\2\33\36\3\2\2\2\34\32\3\2\2\2\34"+
+		"\25\f\5\2\2\25\26\t\2\2\2\26\33\5\4\3\6\27\30\f\4\2\2\30\31\t\3\2\2\31"+
+		"\33\5\4\3\5\32\24\3\2\2\2\32\27\3\2\2\2\33\36\3\2\2\2\34\32\3\2\2\2\34"+
 		"\35\3\2\2\2\35\5\3\2\2\2\36\34\3\2\2\2\37 \5\4\3\2 !\t\4\2\2!\"\5\4\3"+
-		"\2\"\7\3\2\2\2#$\b\5\1\2$%\7\17\2\2%-\5\b\5\4&-\5\6\4\2\'(\7\b\2\2()\5"+
-		"\b\5\2)*\7\4\2\2*-\3\2\2\2+-\7\23\2\2,#\3\2\2\2,&\3\2\2\2,\'\3\2\2\2,"+
-		"+\3\2\2\2-\66\3\2\2\2./\f\b\2\2/\60\7\3\2\2\60\65\5\b\5\t\61\62\f\7\2"+
-		"\2\62\63\7\21\2\2\63\65\5\b\5\b\64.\3\2\2\2\64\61\3\2\2\2\658\3\2\2\2"+
+		"\2\"\7\3\2\2\2#$\b\5\1\2$%\7\17\2\2%-\5\b\5\7&\'\7\b\2\2\'(\5\b\5\2()"+
+		"\7\4\2\2)-\3\2\2\2*-\5\6\4\2+-\7\23\2\2,#\3\2\2\2,&\3\2\2\2,*\3\2\2\2"+
+		",+\3\2\2\2-\66\3\2\2\2./\f\6\2\2/\60\7\3\2\2\60\65\5\b\5\7\61\62\f\5\2"+
+		"\2\62\63\7\21\2\2\63\65\5\b\5\6\64.\3\2\2\2\64\61\3\2\2\2\658\3\2\2\2"+
 		"\66\64\3\2\2\2\66\67\3\2\2\2\67\t\3\2\2\28\66\3\2\2\2\b\22\32\34,\64\66";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
