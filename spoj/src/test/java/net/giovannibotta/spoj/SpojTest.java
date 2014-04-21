@@ -12,8 +12,16 @@ public class SpojTest {
     private static PrintStream originalOutput = System.out;
 
     public void resetInputOutput() {
-        System.setIn(originalInput);
+        resetInput();
+        resetOutput();
+    }
+
+    public void resetOutput(){
         System.setOut(originalOutput);
+    }
+
+    public void resetInput(){
+        System.setIn(originalInput);
     }
 
     public void setInput(String str) {
