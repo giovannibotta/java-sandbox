@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 public class CmexprTest extends SpojTest {
 
     @Test
-    public void test() throws IOException {
+    public void test() throws Exception {
         setInput(IN);
         Main.main(null);
         String o = getOutput();
