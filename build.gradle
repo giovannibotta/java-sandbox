@@ -13,3 +13,12 @@ allprojects {
         testCompile 'junit:junit:4.11'
     }
 }
+
+idea {
+    project {
+        ipr.withXml { provider ->
+            provider.node.component.find { it.@name == 'VcsDirectoryMappings' }.mapping.@directory = '$PROJECT_DIR$'
+            provider.node.component.find { it.@name == 'VcsDirectoryMappings' }.mapping.@vcs = 'Git'
+        }
+    }
+}
