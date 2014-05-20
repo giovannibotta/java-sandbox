@@ -160,7 +160,7 @@ public class OpenAddressingHashTable<K, V> extends AbstractMap<K, V> {
 
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
-        throw new UnsupportedOperationException("Method entrySet not supported at this moment");
+        return new EntrySet<>(this);
     }
 
     @SuppressWarnings("unchecked")
@@ -206,15 +206,21 @@ public class OpenAddressingHashTable<K, V> extends AbstractMap<K, V> {
     // the key can never be null so null here is fine
     private final SimpleImmutableEntry<K, V> deleted = new SimpleImmutableEntry<>(null, null);
 
-    private class EntrySet extends AbstractSet<Entry<K, V>> {
+    private static final class EntrySet<K, V> extends AbstractSet<Entry<K, V>> {
+        private final OpenAddressingHashTable<K, V> table;
+
+        private EntrySet(OpenAddressingHashTable<K, V> table) {
+            this.table = table;
+        }
+
         @Override
         public int size() {
-            return OpenAddressingHashTable.this.size();
+            return table.size();
         }
 
         @Override
         public boolean isEmpty() {
-            return OpenAddressingHashTable.this.isEmpty();
+            return table.isEmpty();
         }
 
         @SuppressWarnings("unchecked")
@@ -228,41 +234,63 @@ public class OpenAddressingHashTable<K, V> extends AbstractMap<K, V> {
         public boolean contains(Object o) {
             Entry<K, V> e = fromObject(o);
 
-            if (!OpenAddressingHashTable.this.containsKey(e.getKey())) return false;
+            if (!table.containsKey(e.getKey())) return false;
 
-            V val = OpenAddressingHashTable.this.get(e.getKey());
+            V val = table.get(e.getKey());
             return val == e.getValue() || (val != null && val.equals(e.getValue()));
         }
 
         @Override
         public Iterator<Entry<K, V>> iterator() {
-            return null;  //To change body of implemented methods use File | Settings | File Templates.
+            return new EntryIterator<>(table);
         }
 
         @Override
         public boolean add(Entry<K, V> kvEntry) {
-            throw new UnsupportedOperationException("Can not add to this view using the add method");
+            throw new UnsupportedOperationException("Can not add to this view");
         }
 
         @Override
         public boolean remove(Object o) {
             Entry<K, V> e = fromObject(o);
-            return OpenAddressingHashTable.this.remove(e.getKey()) != null;
+            return table.remove(e.getKey()) != null;
         }
 
         @Override
         public boolean addAll(Collection<? extends Entry<K, V>> c) {
-            throw new UnsupportedOperationException("Can not add to this view using the addAll method");
+            throw new UnsupportedOperationException("Can not add to this view");
         }
 
         @Override
         public void clear() {
-            OpenAddressingHashTable.this.clear();
+            table.clear();
         }
 
         @Override
         public String toString() {
-            return OpenAddressingHashTable.this.toString();
+            return table.toString();
+        }
+
+        private static final class EntryIterator<K, V> implements Iterator<Entry<K, V>> {
+            private final OpenAddressingHashTable<K, V> table;
+            private int i = -1;
+
+            private EntryIterator(OpenAddressingHashTable<K, V> table) {
+                this.table = table;
+            }
+
+            @Override
+            public boolean hasNext() {
+                while (++i < table.table.length) {
+                    if (table.table[i] != null && table.table[i] != table.deleted) return true;
+                }
+                return false;
+            }
+
+            @Override
+            public Entry<K, V> next() {
+                return table.table[i];
+            }
         }
     }
 }

@@ -8,6 +8,7 @@ allprojects {
     }
 
     dependencies {
+        compile 'org.apache.commons:commons-lang3:3.3.2'
         compile 'com.google.guava:guava:16.0.1'
 
         testCompile 'junit:junit:4.11'
